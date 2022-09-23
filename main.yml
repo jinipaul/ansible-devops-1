@@ -22,6 +22,20 @@
         dest: /etc/httpd/conf.d/default.conf
         owner: "{{httpd_owner}}"
         group: "{{httpd_group}}"
+
+    - name: "Creating docroot {{doc_root}}"
+      file:
+        path: "{{doc_root}}"
+        state: directory    
+        owner: "{{httpd_owner}}"
+        group: "{{httpd_group}}"
+    
+    - name: "Creating test files inside doc root"
+      copy:
+        src: test.html
+        dest: "/var/www/html/{{httpd_hostname}}"
+        owner: "{{httpd_owner}}"
+        group: "{{httpd_group}}"
             
     - name: "Restarting/enabling httpd"
       service:
